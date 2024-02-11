@@ -37,10 +37,11 @@ class StudentController extends Controller
         //
         $student = new Student;
 
-        $student->group_id = $request->input('group_id');
-        $student->surname = $request->input('surname');
-        $student->name = $request->input('name');
+        //$student->group_id = $request->input('group_id');
+        //$student->surname = $request->input('surname');
+        //$student->name = $request->input('name');
 
+        $student->fill($request->all());
         $student->save();
 
         return redirect()->route('students.index')->with('success', "Студент $student->surname $student->name зачислен в группу № $student->group_id");
@@ -67,15 +68,17 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, Student $student)
     {
-        $model = Student::findOrFail($student->id);
+        //$model = Student::findOrFail($student->id);
 
-        $model->fill([
-            'group_id' => $request->get('group_id'),
-            'surname'=> $request->get('surname'),
-            'name'=> $request->get('name')
-        ]);
+        //$model->fill([
+        //    'group_id' => $request->get('group_id'),
+        //    'surname'=> $request->get('surname'),
+        //    'name'=> $request->get('name')
+        //]);
 
-        $model->save();
+        $student->fill($request->all());
+
+        $student->save();
         return redirect()->route('students.index')->with('success', 'Студент успешно откорректирован');
     }
 
@@ -84,8 +87,9 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        $model = Student::findOrFail($student->id);
-        $model->delete();
+        //$model = Student::findOrFail($student->id);
+        //$model->delete();
+        $student->delete();
         return redirect()->route('students.index')->with('success', "Студент $student->surname $student->name успешно отчислен. Можно принимать внука ректора");
     }
 }

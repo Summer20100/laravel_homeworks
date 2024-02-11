@@ -30,9 +30,10 @@ class GroupStudentController extends Controller
     public function store(Request $request, Group $group)
     {
         $student = new Student;
-        $student->group_id = $request->input('group_id');
-        $student->surname = $request->input('surname');
-        $student->name = $request->input('name');
+        //$student->group_id = $request->input('group_id');
+        //$student->surname = $request->input('surname');
+        //$student->name = $request->input('name');
+        $student->fill($request->all());
 
         $student->save();
 

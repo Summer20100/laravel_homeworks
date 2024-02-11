@@ -17,7 +17,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = DB::select('select * from groups');
+        $groups = Group::all();
         return view('groups.index', ['groups' => $groups]);
     }
 
@@ -37,10 +37,11 @@ class GroupController extends Controller
     {
         $group = new Group;
 
-        $group->title = $request->input('title');
-        $group->start_from = $request->input('start_from');
-        $group->is_active = $request->input('is_active');
+        //$group->title = $request->input('title');
+        //$group->start_from = $request->input('start_from');
+        //$group->is_active = $request->input('is_active');
 
+        $group->fill($request->all());
         $group->save();
 
         return redirect()->route('groups.index')->with('success', 'Группа добавлена успешно');
@@ -53,11 +54,11 @@ class GroupController extends Controller
     {
         //return view('groups.show', compact('group'));
 
-        $groups = Group::find($group->id);
+        //$groups = Group::find($group->id);
 
         //dd($groups->students);
 
-        return view('groups.show', ['students' => $groups->students, 'group' => $group]);
+        return view('groups.show', ['students' => $group->students, 'group' => $group]);
 
     }
 
@@ -74,15 +75,17 @@ class GroupController extends Controller
      */
     public function update(GroupRequest $request, Group $group)
     {
-        $model = Group::findOrFail($group->id);
+        //$model = Group::findOrFail($group->id);
 
-        $model->fill([
-            'title' => $request->get('title'),
-            'start_from'=> $request->get('start_from'),
-            'is_active'=> $request->get('is_active')
-        ]);
+        //$model->fill([
+        //    'title' => $request->get('title'),
+        //    'start_from'=> $request->get('start_from'),
+        //    'is_active'=> $request->get('is_active')
+        //]);
 
-        $model->save();
+        $group->fill($request->all());
+
+        $group->save();
         return redirect()->route('groups.index')->with('success', 'Группа откорректирована успешно');
     }
 
@@ -91,8 +94,8 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        $model = Group::findOrFail($group->id);
-        $model->delete();
+        //$model = Group::findOrFail($group->id);
+        $group->delete();
         return redirect()->route('groups.index');
     }
 }

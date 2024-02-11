@@ -14,16 +14,13 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
 
-            //$table->integer('group_id');
-
-            $table->unsignedBigInteger('group_id')->nullable();
+            $table->foreignId('group_id')->constrained();
+            //$table->unsignedBigInteger('group_id')->nullable();
             $table->index('group_id', 'student_group_idx');
-            $table->foreign('group_id', 'student_group_fk')->on('groups')->references('id');
+            //$table->foreign('group_id', 'student_group_fk')->on('groups')->references('id');
 
             $table->string('surname');
             $table->string('name');
-
-            //$table->primary(['surname','name'], 'surname_name');
 
             $table->timestamps();
         });
